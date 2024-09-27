@@ -7,8 +7,9 @@ export default function Home()  {
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
+
   return (
-    <div className="flex items-center justify-center w-full h-screen gap-4">
+    <div className="flex items-center justify-center w-full h-screen gap-4 bg-black">
       <input
         ref={inputRef}
         onChange={(e) => {
@@ -23,6 +24,8 @@ export default function Home()  {
         onChange={(e) => {
           if (e.target.value !== "") {
             inputRef2.current.focus();
+          } else {
+            inputRef.current.focus();
           }
         }}
         className="w-8 h-8 p-1 text-center text-black"
@@ -32,6 +35,8 @@ export default function Home()  {
         onChange={(e) => {
           if (e.target.value !== "") {
             inputRef3.current.focus();
+          } else {
+            inputRef1.current.focus();
           }
         }}
         className="w-8 h-8 p-1 text-center text-black"
@@ -40,7 +45,10 @@ export default function Home()  {
         ref={inputRef3}
         onChange={(e) => {
           if (e.target.value !== "") {
-            inputRef3.current.focus();
+            inputRef3.current.value = e.target.value;
+          }
+          if (e.target.value === "") {
+            inputRef2.current.focus();
           }
         }}
         className="w-8 h-8 p-1 text-center text-black"
