@@ -3,18 +3,22 @@
 
 export default function App() {
     const [laps, setLaps] = useState([]);
-    const [mils, setMils] = useState(10 * 60 * 100 - 50);
+    const [mils, setMils] = useState(10 * 60 * 100);
     const [running, setRunning] = useState(true);
-    
+    const interValRef = useRef(null);
+
 
     const minutes = Math.floor(mils / 60 / 100);
     const seconds = Math.floor((mils % (60 * 100)) / 100);
     const restMils = mils % 100;
 
-    if (running){
-        setTimeout(() => {
-          setMils(mils - 1);
-        }, 10);
+    if (interValRef.current){
+        clearInterval(interValRef.current);
+    }
+    if (running && mils > 0){
+    interValRef.current = setInterval(() => {
+      setMils(mils - 1);
+    }, 10);
     }
 
     return (
@@ -73,7 +77,7 @@ export default function App() {
           <button
             className="bg-black px-5 py-2 rounded-xl"
             onClick={() => {
-              setMils(mils - 3000);
+              setMils(mils + 3000);
             }}
           >
             +30sec
@@ -81,7 +85,11 @@ export default function App() {
           <button
             className="bg-black px-5 py-2 rounded-xl "
             onClick={() => {
-              setMils(mils + 3000);
+              if (mils - 3000 > 0){
+                setMils(mils - 3000);
+              } else{
+                setMils(0);
+              }
             }}
           >
             -30sec
